@@ -28,10 +28,10 @@ export class BeautifyComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.uglyJson = { ...this.lookUp(this.uglyJson,' ','_')};
+    this.uglyJson = { ...this.transform(this.uglyJson,' ','_')};
   }
 
-  lookUp(originalObj, simbolOrigin, simbolResult) {
+  transform(originalObj, simbolOrigin, simbolResult) {
     const propsValue = Object.keys(originalObj).map(key => originalObj[key]);
     const propsValueType = propsValue.map((prop) => typeof prop);
     let tempObject = {};
@@ -40,7 +40,7 @@ export class BeautifyComponent implements OnInit {
         const newName = this.convert(prop,simbolOrigin,simbolResult);
         tempObject[newName] = propsValue[index];
         if(propsValueType[index] === 'object'){
-          tempObject[newName] = this.lookUp(tempObject[newName],simbolOrigin, simbolResult);
+          tempObject[newName] = this.transform(tempObject[newName],simbolOrigin, simbolResult);
           return prop;
         }
         return prop;
